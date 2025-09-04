@@ -128,7 +128,7 @@ Publishers SHOULD ensure that updates are consistently broadcast to the event st
 
 #### Request
 
-**Method:** POST
+**Method:** `POST`
 
 **Path:** `/publisher/submit`
 
@@ -229,7 +229,7 @@ One they have obtained their API credentials, subscribers can send to DMPsee the
 
 All the commands will use:
 
-**Method:** POST
+**Method:** `POST`
 
 **Path:** `/subscriber/submit`
 
