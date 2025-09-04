@@ -130,7 +130,7 @@ Publishers SHOULD ensure that updates are consistently broadcast to the event st
 
 **Method:** POST
 
-**Path:** /publisher/submit
+**Path:** `/publisher/submit`
 
 **Headers:**
 `X-api-id: <publisher-id>`
@@ -230,7 +230,9 @@ One they have obtained their API crendentials, subscribers can send to DMPsee th
 All the commands will use:
 
 **Method:** POST
-**Path:** /subscriber/submit
+
+**Path:** `/subscriber/submit`
+
 **Headers:**
 `X-api-id: <publisher-id>`
 `X-api-key: <publisher-key>`
