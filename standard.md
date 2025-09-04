@@ -129,7 +129,9 @@ Publishers SHOULD ensure that updates are consistently broadcast to the event st
 #### Request
 
 **Method:** POST
+
 **Path:** /publisher/submit
+
 **Headers:**
 `X-api-id: <publisher-id>`
 `X-api-key: <publisher-key>`
