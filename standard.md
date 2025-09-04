@@ -1,7 +1,9 @@
 # DMPsee: Environmentally Responsible Event Propagation Standard for Data Management Plans
 
 **Authors:**
-Andrea Davanzo [0009-0000-5170-1737](https://orcid.org/0009-0000-5170-1737), University of Edinburgh
+
+- Andrea Davanzo [0009-0000-5170-1737](https://orcid.org/0009-0000-5170-1737), University of Edinburgh
+- Don Stuckey [0009-0008-1697-9432](https://orcid.org/0009-0008-1697-9432), University of Edinburgh
 
 Last revision: 2025-09-04
 
