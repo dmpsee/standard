@@ -146,7 +146,7 @@ Publishers SHOULD ensure that updates are consistently broadcast to the event st
 > **[!NOTE]** The field `id` is an internal identifier specific for the DMP platform.
 > The primary scope is to be a reference for the subscriber but also for the same publishers in case they need the value back from a subscriber.
 
-While including the full DMP object in the `data` is the most convinient solution for the subscribers, DMPsee implementers MUST consider the environmental impact of data transfer over subsscribers' convinience. The primary goal must be to privilege the shortest content and avoid wasting bandwidth on unnecessary information. The data element MUST be used only when essential for the subscriber to maintain synchronization.
+While including the full DMP object in the `data` is the most convenient solution for the subscribers, DMPsee implementers MUST consider the environmental impact of data transfer over subscribers' convenience. The primary goal must be to privilege the shortest content and avoid wasting bandwidth on unnecessary information. The data element MUST be used only when essential for the subscriber to maintain synchronization.
 
 
 ```json
@@ -219,7 +219,7 @@ Body:
 ## API Subscriber
 
 The **Subscriber** component of the DMPsee API is responsible for managing the subscribers' request.
-One they have obtained their API crendentials, subscribers can send to DMPsee the following commands:
+One they have obtained their API credentials, subscribers can send to DMPsee the following commands:
 
 - **url**: create/update the URL where to receive the events
 - **event-subscribe**: subscribe to one or more events
@@ -243,7 +243,7 @@ For all the commands sent to the API the response will be the same in case of Su
 
 #### Success
 
-There is no body on success response as the http statu code is sufficient
+There is no body on success response as the http status code is sufficient
 
 ```
 HTTP Status codes: 200
