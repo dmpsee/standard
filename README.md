@@ -5,7 +5,7 @@
 - Andrea Davanzo [0009-0000-5170-1737](https://orcid.org/0009-0000-5170-1737), University of Edinburgh
 - Don Stuckey [0009-0008-1697-9432](https://orcid.org/0009-0008-1697-9432), University of Edinburgh
 
-Last revision: 2025-10-05
+Last revision: 2026-01-15
 
 > [!NOTE]
 > The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119)
@@ -193,9 +193,9 @@ This is the part that is stored and reported back to the subscribers.
 
 ---
 
-## Publisher API
+## API for Publisher
 
-The **Publisher** component of the DMPsee API is responsible for receiving events raised in a platform.
+The **API for Publisher** component is responsible for receiving events raised in a platform.
 Publishers SHOULD ensure that updates are consistently broadcast to the event stream so that subscribers can act on them.
 The Payload Structure for transmittin an event is
 
@@ -216,7 +216,7 @@ The Payload Structure for transmittin an event is
 > The primary scope is to be a reference for the subscriber but also for the same publishers in case they need the value back from a subscriber.
 
 While including the full DMP object in the index 2 of the data array, is the most convenient solution for the subscribers, DMPsee implementers MUST consider the environmental impact of data transfer over subscribers' convenience.
-The primary goal must be to privilege the shortest content and avoid wasting bandwidth on unnecessary information.
+The primary goal MUST be to privilege the shortest content and avoid wasting bandwidth on unnecessary information.
 
 Below an example of a API request
 
@@ -227,10 +227,18 @@ curl -k -X POST https://demo-api.dmpsee.org/post \
 ```
 
 
-## API Subscriber
+## API for Subscriber
 
-The **Subscriber** component of the DMPsee API is responsible for managing the subscribers' request.
+The **API for Subscriber** component allows downstream systems, such as storage providers, institutional repositories, or funding bodies, to manage their event streams.
+Subscribers do not need to poll the DMP platform; instead, they use this API to register their interest and define where they want to receive asynchronous webhook callbacks.
 Once they have obtained their API credentials, subscribers can send to DMPsee the commands as per Table 1.
+
+**Available Commands for Subscribers:**
+
+* **evs (Event Subscribe):** Registers interest in a specific 3-character event code.
+* **evu (Event Unsubscribe):** Removes interest in a specific event code to stop receiving data.
+* **urr (URL Read):** Retrieves the currently configured webhook callback URL for the subscriber.
+* **urw (URL Write):** Sets or updates the destination URL where DMPsee will post events.
 
 ### Event Subscribe
 
@@ -306,7 +314,20 @@ curl -k -X POST https://demo-api.dmpsee.org/post \
   -d `["urw","my-url"]`
 ```
 
-## API admin
+## API for Admin
+
+The **API for Admin** provides the governance layer for the DMPsee ecosystem.
+It is used to manage the lifecycle of events and ensure that only authorized entities can publish to specific streams.
+This component is critical for maintaining the security and integrity of the research data propagation network.
+
+**Available Commands for Admins:**
+
+* **eva (Event Allow Publisher):** Authorizes a specific Publisher ID to send events for a code.
+* **evi (Event Disallow Publisher):** Revokes publishing permissions for a specific entity.
+* **evw (Event Write):** Registers a new valid Event Code within the system.
+* **evd (Event Delete):** Removes an Event Code and all associated permissions from the system.
+* **usw (User Write):** Creates or updates user credentials and assigns roles (`pub`, `sub`, `adm`).
+* **usd (User Delete):** Deactivates a user and revokes their API access.
 
 ### Event Allow Publisher
 
