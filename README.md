@@ -1,35 +1,37 @@
-# DMPsee: Environmentally Responsible Event Propagation Standard for Data Management Plans
+# DMPsee: Environmentally Responsible Event Propagation Specification for Data Management Plans
+
+**Document Status**: Draft
+
+**Last revision**: 2026-02-03
 
 **Authors:**
 
 - Andrea Davanzo [0009-0000-5170-1737](https://orcid.org/0009-0000-5170-1737), University of Edinburgh
 - Don Stuckey [0009-0008-1697-9432](https://orcid.org/0009-0008-1697-9432), University of Edinburgh
 
-Last revision: 2026-01-15
-
 > [!NOTE]
 > The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119)
 
 ## Introduction
 
-DMP Sent Events (DMPsee) is an **open standard** designed to propagate updates
+DMP Sent Events (DMPsee) is an **open specification** designed to propagate updates
 from DMP platforms to other systems via webhooks.
 These events can then be consumed by any interested subscriber.
 
 This publish/subscribe model enables a loosely coupled and scalable approach
 to keeping dependent systems informed of DMP changes across platforms.
 
-As an open standard, DMPsee promotes interoperability, avoids vendor lock-in,
+As an open specification, DMPsee promotes interoperability, avoids vendor lock-in,
 and ensures that diverse systems can seamlessly exchange DMP updates.
 
 ### The Environmentally Responsible Principle
 
-One of the guiding principles of the DMPsee standard is to minimize unnecessary
+One of the guiding principles of the DMPsee specification is to minimize unnecessary
 resources and data transfer, thereby reducing environmental impact.
 Although each individual request may be small, the cumulative effect of redundant
 information exchanged billions of times per year becomes significant in terms of
 bandwidth consumption, energy usage, and associated carbon emissions.
-For this reason, the standard is designed with environmental responsibility as
+For this reason, the specification is designed with environmental responsibility as
 a primary concern, while still acknowledging the social and economic dimensions of sustainability.
 By privileging efficiency and avoiding wasteful data exchange, DMPsee demonstrates
 that digital infrastructures can be both technically robust and ecologically responsible.
@@ -141,15 +143,16 @@ The only status codes used on DMPsee are show below.
 | 500  | (Internal Server Error) The catch-all for unexpected issues on the server side. This would be used for any failure that is not the client's fault. |
 
 
-
-
 ### Events
 
 Events are trasmitted by publisher to DMPsee, which will post back to the relative subscribers.
 All events have a three-character **Event code (EC)** composed of a two-character **Event Element Prefix (EEP)** and a one-character **Event Action Code (EAC)**.
-However, it is also possible to use DMPsee beyond the RDA DMP Common Standard.
-For this reason, the first character of the Element prefixes, when numeric, is reserved for custom events.
-Elements prefixes and Actions code are visible below:
+
+```
+EC = EEP + EAC
+```
+
+The **EEP** indicates the type of element affected:
 
 | Element              | EEP |
 | -------------------- | ------ |
@@ -167,6 +170,8 @@ Elements prefixes and Actions code are visible below:
 | Technical Resource   | te   |
 | Metadata             | mt   |
 | Reserved for custom events | [0-9]* |
+
+And **EAC** indicates the type of action:
 
 | Action     | EAC |
 | ---------- | ---- |
@@ -186,10 +191,10 @@ Examples of RDA DMP Common Standard event codes:
 `dmc` = `dm` DMP `c` create
 `cod` = `co` Contact `c` delete
 
-When a publisher submit an event, the `data` part witt index position `1` inside the Event array.
-This is the part that is stored and reported back to the subscribers.
 
-
+> [!NOTE]
+> It is possible to use DMPsee beyond the RDA DMP Common Standard.
+For this reason, the first character of the Element prefixes, when numeric, is reserved for custom events.
 
 ---
 
@@ -205,7 +210,7 @@ The Payload Structure for transmittin an event is
   [
     0 => "(required) Event code (EC)
     1 => "my-id", // (required) Publisher Internal Identifier (PII)
-    2 => [optional] - the RDA DMP Common Standard element (RCSE) of the event.
+    2 => [optional] - the RDA DMP Common Standard element (RCSe) of the event.
                       A JSON object contains a maDMP object or a part of it,
                       validated against the RDA-DMP Common Standard schema
   ]
@@ -225,7 +230,17 @@ curl -k -X POST https://demo-api.dmpsee.org/post \
   -H "AC: pub-1:key-pub-1" \
   -d '["evp", ["dmu", "my-id"]]'
 ```
+Explanation of the example:
 
+1. **Command** `evp` This tells DMPsee that the request is to publish an event.
+2. **Event code (EC)**: `dmu` — This is the three-character event code:
+  - `dm` = DMP (Event Element Prefix)
+  - `u` = Update (Event Action Code)
+
+Together, `dmu` signals that this is an update to a DMP.
+
+3. **Publisher Internal Identifier (PII)**: "my-id": — A unique identifier chosen by the publisher to reference this specific update.
+4. **Optional payload:** Not included in this example to minimize data transfer.
 
 ## API for Subscriber
 
